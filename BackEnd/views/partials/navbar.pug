@@ -1,0 +1,20 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+    a.navbar-brand(href='/') TrueSign
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarColor02', aria-controls='navbarColor02', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarColor02.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+            li.nav-item.active
+                a.nav-link(href='#')
+                | Home
+                span.sr-only (current)
+            li.nav-item
+                a.nav-link(href='/about') About
+            if loggedIn === true
+                li.nav-item
+                    a.nav-link(href='/admin') KYC
+                li.nav-item
+                    a.nav-link(href='/api/auth/logout') Logout
+            else
+                li.nav-item
+                    a.nav-link(href='/login') Login
