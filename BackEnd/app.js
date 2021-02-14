@@ -12,8 +12,6 @@ const path = require('path')
 var HomeController = require('./Controller/HomeController')
 var UserController = require('./Controller/UserController');
 var AuthController = require('./Controller/AuthController');
-var AdminController = require('./Controller/AdminController');
-var PushController = require('./Controller/PushController');
 var TestController = require('./Controller/TestController');
 
 // setup environmental variable
@@ -30,9 +28,6 @@ const logger = (req, res, next) => {
   console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}: ${moment().format()}`);
   next();
 }
-
-// set pug view template
-app.set('view engine', 'pug');
 
 // middleware
 app.use(logger);
@@ -62,10 +57,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // app routes
 app.use('/', HomeController);
-app.use('/admin', AdminController)
 app.use('/users', UserController);
-app.use('/api/auth', AuthController);
-app.use('/push', PushController);
+app.use('/auth', AuthController);
 app.use('/test', TestController);
 
 // setup port
