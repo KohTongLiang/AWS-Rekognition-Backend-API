@@ -5,14 +5,34 @@ var cors = require('cors');
 const dotenv = require('dotenv');
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
+const fileUpload = require('express-fileupload');
 var moment = require('moment');
-const path = require('path')
+const path = require('path');
+var AWS = require("aws-sdk");
+var multer = require('multer');
+
+AWS.config.update({
+  accessKeyId: AWS.config.credentials.accessKeyId,
+  secretAccessKey: AWS.config.credentials.secretAccessKey,
+  region: "ap-southeast-1",
+});
+
+const s3 = new AWS.S3();
+// AWS.config.getCredentials(function(err) {
+//   if (err) console.log(err.stack);
+//   // credentials not loaded
+//   else {
+//     console.log("Access key:", AWS.config.credentials.accessKeyId);
+//   }
+// });
+
 
 // import controllers
-var HomeController = require('./Controller/HomeController')
-var UserController = require('./Controller/UserController');
-var AuthController = require('./Controller/AuthController');
-var TestController = require('./Controller/TestController');
+const AuthController = require('./Controller/AuthController');
+const ClassListController = require('./Controller/ClassListController');
+const StudentController = require('./Controller/StudentController');
+const ModuleController = require('./Controller/ModuleController');
+const AdminController = require('./Controller/AdminController.js');
 
 // setup environmental variable
 dotenv.config();
@@ -30,41 +50,32 @@ const logger = (req, res, next) => {
 }
 
 // middleware
+app.use(fileUpload());
 app.use(logger);
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cors());
-// to restrict origin
-// var allowedOrigins = ['http://localhost:3000',
-//                       'http://yourapp.com'];
-// app.use(cors({
-//   origin: function(origin, callback){
-//     // allow requests with no origin 
-//     // (like mobile apps or curl requests)
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){
-//       var msg = 'The CORS policy for this site does not ' +
-//                 'allow access from the specified Origin.';
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
 
 // Add css and boostrap to path
 app.use(express.static(path.join(__dirname, "public")));
 
 // app routes
-app.use('/', HomeController);
-app.use('/users', UserController);
 app.use('/auth', AuthController);
-app.use('/test', TestController);
+app.use('/classList', ClassListController);
+app.use('/student', StudentController);
+app.use('/module', ModuleController)
+app.use('/admin', AdminController);
 
 // setup port
 var port = process.env.PORT || 5000;
 
+// kill process when nodemon exits
+process.once("SIGHUP", function () {
+  process.exit();
+})
+
 // start the app
-app.listen(port, function() {
+app.listen(port, function () {
   console.log('Express server listening on port ' + port);
 });
