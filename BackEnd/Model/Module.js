@@ -8,9 +8,12 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    moduleDescription: {
+    acadYear: {
         type: String,
         required: true
+    },
+    moduleDescription: {
+        type: String
     }
 },
     { timestamps: true });

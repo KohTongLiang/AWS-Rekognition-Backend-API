@@ -32,7 +32,8 @@ const AuthController = require('./Controller/AuthController');
 const ClassListController = require('./Controller/ClassListController');
 const StudentController = require('./Controller/StudentController');
 const ModuleController = require('./Controller/ModuleController');
-const AdminController = require('./Controller/AdminController.js');
+const AdminController = require('./Controller/AdminController');
+const SessionController = require('./Controller/SessionController');
 
 // setup environmental variable
 dotenv.config();
@@ -66,8 +67,10 @@ app.use('/classList', ClassListController);
 app.use('/student', StudentController);
 app.use('/module', ModuleController)
 app.use('/admin', AdminController);
+app.use('/session', SessionController);
 
 // setup port
+// var port = 5002;
 var port = process.env.PORT || 5000;
 
 // kill process when nodemon exits

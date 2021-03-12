@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 var schema = new mongoose.Schema({
-    name: {
+    studentName: {
         type: String,
         required: true
     },
-    email: {
+    studentEmail: {
         type: String,
         required: true
     },
@@ -16,13 +16,9 @@ var schema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    studentImage: {
+    image: {
         type: String,
-        require: true
-    },
-    attended: {
-        type: Boolean,
-        default: false
+        required: true
     }
 },
     { timestamps: true });
