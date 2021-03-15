@@ -36,7 +36,7 @@ router.post('/', VerifyToken, (req, res) => {
 // Update a student record and update their face image
 router.put('/:studentMatricNo', VerifyToken, (req, res) => {
     Student.findOneAndUpdate({ studentMatricNo: req.params.studentMatriNo }, req.body, (err, student) => {
-        if (err) return res.status(500).send({ message: "There was a problem creating Student" });
+        if (err) return res.status(500).send({ message: "There was a problem editing Student" });
 
         //
         Face.findOne({ studentMatricNo: req.params.studentMatricNo }, (err, result) => {
@@ -122,7 +122,7 @@ router.delete('/:studentMatricNo', VerifyToken, (req, res) => {
                 Student.findOneAndDelete({studentMatricNo: req.params.studentMatricNo}, (err, student) => {
                     if (err) return res.status(500).send({ message: "There was a problem deleting student"});
             
-                    res.status(200).send({ message: 'Ok' });
+                    res.status(200).send({ message: 'Successfully deleted student.' });
                 });                
             });
         });
