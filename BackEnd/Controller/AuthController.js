@@ -15,7 +15,7 @@ router.post('/register', function (req, res) {
         password: hashedPassword
     }, function (err, lecturer) {
         if (err) {
-            return res.status(500).send("There was a problem registering the account.");
+            return res.status(500).send({ auth: false, message: "There was a problem registering the account."});
         }
 
         // create a token

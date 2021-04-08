@@ -71,15 +71,24 @@ router.post('/attendance/:sessionId', VerifyToken, (req, res) => {
     // calling method API AWS to recoknition face.
     facialAWS.search_face(obj, function (data) {
         if (data.found) {
-
-            console.log(data);
             // mark student as attended
             const studentMatricNoQuery = data.ExternalImageId;
 
-            Session.findOneAndUpdate({ _id: req.params.sessionId }, { $addToSet: { attended: studentMatricNoQuery } }, (err, session) => {
-                if (err) return res.status(500).send({ message: "There was a problem marking the attendance" });
+            // check if student registered to the class, if it is not registered, send a error message
+            Session.findOne({ _id: req.params.sessionId }).populate('class').exec((err, session) => {
+                const registeredStudents = session.class.students;
 
-                res.status(200).send({ message: "Attendance has been successfully marked." });
+                // if (registeredStudents.includes(studentMatricNoQuery)) {
+                    // student is registered
+                    Session.findOneAndUpdate({ _id: req.params.sessionId }, { $addToSet: { attended: studentMatricNoQuery } }, (err, result) => {
+                        if (err) return res.status(500).send({ message: "There was a problem marking the attendance" });
+
+                        res.status(200).send({ message: "Attendance has been successfully marked." });
+                    });
+                // } else {
+                //     // student is not registered in the class
+                //     res.status(404).send({ message: "Student is not registered in the class." });
+                // }
             });
         } else {
             res.status(404).send({ message: "Identity not detected." });
@@ -90,10 +99,23 @@ router.post('/attendance/:sessionId', VerifyToken, (req, res) => {
 // POST /classList/attendance/manual/:sessionId
 // POST session id and student matric number to manually register student's IC
 router.post('/attendance/manual/:sessionId', VerifyToken, (req, res) => {
-    Session.findOneAndUpdate({ _id: req.params.sessionId }, { $push: { attended: req.body.studentMatricNo } }, { new: true }, (err, attendance) => {
-        if (err) return res.status(500).send({ message: "There was a problem marking the attendance" });
 
-        res.status(200).send({ message: "Attendance has been successfully marked." });
+    // check if student registered to the class, if it is not registered, send a error message
+    Session.findOne({ _id: req.params.sessionId }).populate('class').exec((err, session) => {
+        const registeredStudents = session.class.students;
+        console.log(registeredStudents);
+
+        if (registeredStudents.includes(req.body.studentMatricNo)) {
+            // student is registered in class
+            Session.findOneAndUpdate({ _id: req.params.sessionId }, { $push: { attended: req.body.studentMatricNo } }, { new: true }, (err, attendance) => {
+                if (err) return res.status(500).send({ message: "There was a problem marking the attendance" });
+
+                res.status(200).send({ message: "Attendance has been successfully marked." });
+            });
+        } else {
+            // student is not registered in class
+            res.status(404).send({ message: "Student is not registered in the class." });
+        }
     });
 });
 

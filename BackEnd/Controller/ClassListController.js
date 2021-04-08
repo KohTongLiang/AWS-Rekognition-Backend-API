@@ -8,7 +8,9 @@ var facialAWS = require("../Services/ImageRecognition");
 // POST /classList
 // Creating a class list
 router.post('/', VerifyToken, (req, res) => {
+    console.log(req.body);
     ClassList.create( req.body, (err, classList) => {
+        console.log(err);
         if (err) return res.status(500).send({ message: "There was a problem creating class list"});
 
         res.status(200).send({ message: "Successfully created Class List" });
