@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "ntuscse-se-ssp4-ay1920s1"
+  },
+  "targets": {
+    "ntuscse-se-ssp4-ay1920s1": {
+      "hosting": {
+        "ase-frats": [
+          "ntuscse-ase-ssp3-g1-ay1920s2"
+        ]
+      }
+    }
+  }
+}
