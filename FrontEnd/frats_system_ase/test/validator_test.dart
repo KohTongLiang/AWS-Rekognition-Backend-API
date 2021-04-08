@@ -5,8 +5,8 @@ void main() {
 
   ///Tests for email value
   group("Email: ", () {
-    test('chsiao001@e.ntu.edu.sg', () {
-      var result = Validator.validateEmail('chsiao001@e.ntu.edu.sg');
+    test('wli035@e.ntu.edu.sg', () {
+      var result = Validator.validateEmail('wli035@e.ntu.edu.sg');
       expect(result, null);
     });
 
@@ -16,8 +16,8 @@ void main() {
       expect(result, 'Enter Valid Email');
     });
 
-    test('chsiao001', () {
-      var result = Validator.validateEmail('chsiao001');
+    test('wli035', () {
+      var result = Validator.validateEmail('wli035');
       expect(result, 'Enter Valid Email');
     });
 
@@ -26,13 +26,13 @@ void main() {
       expect(result, 'Enter Valid Email');
     });
 
-    test('chiayu@ntu@edu.sg', () {
-      var result = Validator.validateEmail('chiayu@ntu@edu.sg');
+    test('wli@ntu@edu.sg', () {
+      var result = Validator.validateEmail('wli@ntu@edu.sg');
       expect(result, 'Enter Valid Email');
     });
 
-    test('chiayu@ntu@edu.sg', () {
-      var result = Validator.validateEmail('chiayu@ntu@edu.sg');
+    test('wli@ntu@edu.sg', () {
+      var result = Validator.validateEmail('wli@ntu@edu.sg');
       expect(result, 'Enter Valid Email');
     });
   });
@@ -52,28 +52,28 @@ void main() {
 
   /// Test for Student Name value
   group('Student name: ', () {
-    test('Chiayu', () {
-      var result = Validator.validateStudentName('Chiayu');
+    test('Kevin', () {
+      var result = Validator.validateStudentName('Kevin');
       expect(result, null);
     });
 
-    test('ChiaYu', () {
-      var result = Validator.validateStudentName('ChiaYu');
+    test('WeiTing', () {
+      var result = Validator.validateStudentName('WeiTing');
       expect(result, null);
     });
 
-    test('Hsiao Chia Yu', () {
-      var result = Validator.validateStudentName('Hsiao Chia Yu');
+    test('Li Wei Ting', () {
+      var result = Validator.validateStudentName('Li Wei Ting');
       expect(result, null);
     });
 
-    test('Hsiao Chia-Yu', () {
-      var result = Validator.validateStudentName('Hsiao Chia-Yu');
+    test('Li Wei-Ting', () {
+      var result = Validator.validateStudentName('Li Wei-Ting');
       expect(result, null);
     });
 
-    test('Koh Tat You @ Arthur Koh', () {
-      var result = Validator.validateStudentName('Koh Tat You @ Arthur Koh');
+    test('Li Wei-Ting @ Kevin', () {
+      var result = Validator.validateStudentName('Li Wei-Ting @ Kevin');
       expect(result, null);
     });
 
