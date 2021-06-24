@@ -1,3 +1,3 @@
-# CZ3002 ASE
+Backend Implementation of AWS Rekognition
 
-Face Recognition Attendance Taking System
+- Serve AWS Rekognition Services through API endpoints.
